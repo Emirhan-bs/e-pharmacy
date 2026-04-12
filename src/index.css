@@ -1,0 +1,43 @@
+:root {
+  --color-primary: #59b17a;
+  --color-primary-light: rgba(89, 177, 122, 0.1);
+  --color-bg: #f7f8fa;
+  --color-white: #fff;
+  --color-dark: #1d1e21;
+  --color-gray: #6b7280;
+  --color-border: #e5e7eb;
+
+  --font-main: "Inter", sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 100px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-dark);
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: var(--font-main);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
