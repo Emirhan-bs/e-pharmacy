@@ -20,9 +20,19 @@ padding: 32px;
     margin-bottom: 24px;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 .logo img {
     height: 38px;
     filter:brightness(0) invert(1);
+}
+.logoText {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-white);
 }
 .description {
     margin-top: 12px;
@@ -37,10 +47,11 @@ max-width: 260px;
     gap: 40px;
     align-items: center;
 }
-nav {
-    display: flex;
-    gap: 24px;
-
+.nav {
+  display: flex;
+  gap: 24px;
+  margin-right: 450px;
+    
 }
 
 .link {
@@ -48,34 +59,32 @@ nav {
     font-weight: 500;
     color: rgba(255, 255, 255, 0.9);
     transition: color 0.2s;
+    
 }
 
 .link:hover {
     color: var(--color-white);
 }
 
-.socials {
+
+.social {
     display: flex;
     gap: 12px;
     list-style: none;
 }
 
 .socialLink {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background-color:1px solid rgba(255, 255, 255, 0.4);
-    color: var(--color-white);
-    font-size: 12px;
-    font-weight: 700;
-    transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: opacity 0.2s;
 }
-
 .socialLink:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+opacity: 0.8;    
 
 }
 
@@ -93,13 +102,15 @@ nav {
 
 .bottomLinks {
     display: flex;
-    gap: 24px;
-}
+  gap: 24px;
+  font-size: 13px;
 
-.bottomLinks{
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.7);
-    transition: color 0.2s;
+  
+}
+.bottomLink {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s;
 }
 
 .bottomLinks:hover {

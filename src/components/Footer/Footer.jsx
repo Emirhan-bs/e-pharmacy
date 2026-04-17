@@ -12,6 +12,7 @@ function Footer() {
           <div className={styles.brand}>
             <NavLink to="/" className={styles.logo}>
               <img src={logo} alt="E-Pharmacy Logo" />
+              <span className={styles.logoText}>E-Pharmacy</span>
             </NavLink>
             <p className={styles.description}>
               Created a drug franchise that embodies effective formulas and
@@ -41,7 +42,9 @@ function Footer() {
                   rel="noreferrer"
                   className={styles.socialLink}
                 >
-                  Facebook
+                  <svg width="32" height="32">
+                    <use href="#icon-facebook"/>
+                  </svg>
                 </a>
               </li>
               <li>
@@ -51,7 +54,9 @@ function Footer() {
                   rel="noreferrer"
                   className={styles.socialLink}
                 >
-                  Instagram
+                  <svg width="32" height="32">
+                    <use href="#icon-instagram"/>
+                  </svg>
                 </a>
               </li>
               <li>
@@ -61,7 +66,9 @@ function Footer() {
                   rel="noreferrer"
                   className={styles.socialLink}
                 >
-                  Youtube
+                  <svg width="32" height="32">
+                    <use href="#icon-youtube"/>
+                  </svg>
                 </a>
               </li>
             </ul>

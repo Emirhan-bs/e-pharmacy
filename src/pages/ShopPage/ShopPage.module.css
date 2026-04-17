@@ -1,0 +1,165 @@
+.page{
+    min-height: calc(100vh - 70px);
+    background-color: var(--color-bg); 
+    padding: 40px;
+}
+
+.container{
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+/* Form Card */
+.card{
+    flex: 1;
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: 40px;
+}
+
+.title{
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 8px;
+}
+
+.subtitle{
+    font-size: 14px;
+    color: var(--color-gray);
+    margin-bottom: 32px;
+}
+
+/* Column Row 3 */
+
+.row{
+    display: flex;
+    gap: 16px;
+}
+
+.row .field{
+    flex: 1;
+}
+
+/* Sıngle fıeld row */
+.rowSingle{
+    display: flex;
+}
+
+.rowSingle .field{
+    width: 32%;
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label{
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-dark);
+
+}
+
+.input{
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    font-size: 14px;
+    color: var(--color-dark);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input:focus{
+    border-color: var(--color-primary);
+
+}
+
+.inputError{
+    border-color: #ef4444;
+}
+
+.error{
+    font-size: 12px;
+    color: #ef4444;
+}
+
+
+/* Radio Buttons */
+.radioGroup{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.radioOptions{
+    display: flex;
+    gap: 24px;
+}
+
+.radioLabel{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--color-dark);
+    cursor: pointer;
+}
+
+.radio{
+    accent-color: var(--color-primary);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Submit Button */
+.button{
+    width: fit-content;
+    padding: 12px 40px;
+    border-radius: var(--radius-md);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-size: 15px;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.button:hover{
+    opacity: 0.9;
+}
+
+/* Right Image */
+.imageWrapper{
+    width: 420px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+}
+
+/* Responsive */
+
+@media (max-width:768px) {
+    .container{
+        flex-direction: column;
+    }
+    .row{
+        flex-direction: column;
+    }
+    .imageWrapper{
+        width: 100%;
+    }
+}

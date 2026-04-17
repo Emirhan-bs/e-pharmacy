@@ -9,6 +9,7 @@ function Header() {
         {/* LOGO */}
         <NavLink to="/" className={styles.logo}>
           <img src={logo} alt="E-Pharmacy logo" />
+          <span className={styles.logoText}>E-Pharmacy</span>
         </NavLink>
 
         {/* NAV LINKS */}
