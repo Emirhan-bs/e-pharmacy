@@ -12,13 +12,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<LoginPage />}></Route>
+        <Route path="register" element={<RegisterPage />}></Route>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
           <Route path="shop" element={<Shop />} />
           <Route path="medicine" element={<Medicine />} />
           <Route path="statistics" element={<Statistics />} />
-          <Route path="login" element={<LoginPage />}></Route>
-          <Route path="register" element={<RegisterPage />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

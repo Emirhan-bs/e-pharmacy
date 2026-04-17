@@ -3,6 +3,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styles from "./RegisterPage.module.css";
 import { useNavigate, NavLink } from "react-router-dom";
+import logo from "../../assets/images/main-logo.png";
+import pillImg from "../../assets/images/white-pill.png";
 
 const schema = yup.object({
   name: yup
@@ -39,6 +41,13 @@ function RegisterPage() {
 
   return (
     <div className={styles.page}>
+
+      <div className={styles.logoWrapper}>
+        <NavLink to="/" className={styles.logo}></NavLink>
+      </div>
+
+
+
       {/* Left Side */}
       <div className={styles.left}>
         <div className={styles.pill}>💊</div>
