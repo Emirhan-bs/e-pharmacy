@@ -1,0 +1,226 @@
+.page {
+  min-height: calc(100vh-70px);
+  background-color: var(--color-bg);
+  padding: 32px 40px;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Shop Header */
+.shopHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.shopName {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-dark);
+}
+
+.shopInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--color-gray);
+}
+.infoItem strong {
+  color: var(--color-dark);
+}
+
+.editDataBtn {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  font-size: 14px;
+  color: var(--color-dark);
+  transition: all 0.2s;
+}
+
+.editDataBtn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.addMedicineBtn {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.addMedicineBtn:hover {
+  opacity: 0.9;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 24px;
+}
+
+.tab {
+  padding: 8px 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-gray);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: var(--color-primary);
+}
+
+.tabActive {
+  color: var(--color-dark);
+  border-bottom-color: var(--color-dark);
+  font-weight: 600;
+}
+
+/* Medicine grid - 4 columns */
+.prid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Medicine Card */
+.card {
+  background-color: var(--color-white);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+/* Image box */
+.imageBox {
+  width: 100%;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+}
+
+.medicineImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 14px;
+}
+
+.imagePlaceholder {
+  font-size: 60px;
+}
+
+/* CARD INFO */
+.cardInfo {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 135px;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.medicineName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+.medicinePrice {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.medicineCategory {
+  font-size: 12px;
+  color: var(--color-gray);
+}
+/* EDIT / DELETE BUTTONS */
+.cardButtons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Edit button — green filled */
+.editBtn {
+  padding: 10px 25px;
+  border-radius: 24px; /* exact from Figma */
+  border: none;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.editBtn:hover {
+  opacity: 0.9;
+}
+
+/* Delete button — outlined */
+.deleteBtn {
+  padding: 10px 25px;
+  border-radius: 24px; /* exact from Figma */
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  color: var(--color-dark);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .shopHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
