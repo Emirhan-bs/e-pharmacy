@@ -4,6 +4,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import ShopPage from "./pages/ShopPage/ShopPage";
 import DrugStorePage from "./pages/DrugStorePage/DrugStorePage";
+import StatisticsPage from "./pages/StatisticsPage/StatisticsPage";
 
 const Home = () => <h1 style={{ padding: 32 }}>Home Page</h1>;
 const Shop = () => <h1 style={{ padding: 32 }}>Shop Page</h1>;
@@ -20,7 +21,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="shop" element={<ShopPage />} />
           <Route path="medicine" element={<DrugStorePage />} />
-          <Route path="statistics" element={<Statistics />} />
+          <Route path="statistics" element={<StatisticsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 import logo from "../../assets/images/main-logo.png";
 import pillImg from "../../assets/images/white-pill.png";
+import { login } from "../../api/auth";
 
 const schema = yup.object({
   email: yup
@@ -29,8 +30,15 @@ function LoginPage() {
   });
 
   const onSubmit = async (data) => {
-    console.log("Login data", data);
-    navigate("/shop");
+    try {
+      const response = await login(data);
+      // Save token to localStorage
+      localStorage.setItem("token", response.token);
+      navigate("/shop");
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert(error.response?.data?.message || "Login failed!");
+    }
   };
 
   return (
@@ -44,11 +52,7 @@ function LoginPage() {
       <div className={styles.content}>
         <div className={styles.left}>
           <div className={styles.pill}>
-            <img
-              className={styles.pillImg}
-              src={pillImg}
-              alt="pill"
-            />
+            <img className={styles.pillImg} src={pillImg} alt="pill" />
           </div>
           <h1 className={styles.title}>
             Your medication, delivered Say goodbye to all{" "}

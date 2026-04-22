@@ -1,85 +1,87 @@
 import { useState } from "react";
 import styles from "./DrugStorePage.module.css";
+import hydroImg from "../../assets/images/hydro.png";
+import occiImg from "../../assets/images/occi.png";
+import octiImg from "../../assets/images/octi.png";
+import predImg from "../../assets/images/pred.png";
+import helminImg from "../../assets/images/helmin.png";
+import alcoholImg from "../../assets/images/alcohol.png";
+import AddMedicineModal from "../../components/modals/AddMedicineModal";
+import EditMedicineModal from "../../components/modals/EditMedicineModal";
+import DeleteMedicineModal from "../../components/modals/DeleteMedicineModal";
 
-// Mock medicine data (we'll replace with API later)
 const mockMedicines = [
-  {
-    id: 1,
-    name: "Hydrochloride",
-    category: "Framing (Wood)",
-    price: 582,
-    image: null,
-  },
-  {
-    id: 2,
-    name: "Occidentalis",
-    category: "Fire Sprinkler System",
-    price: 239,
-    image: null,
-  },
-  { id: 3, name: "Octinoxate", category: "Eifs", price: 306, image: null },
-  {
-    id: 4,
-    name: "Prednisone",
-    category: "Soft Flooring and Base",
-    price: 579,
-    image: null,
-  },
-  {
-    id: 5,
-    name: "Helminthos",
-    category: "Overhead Doors",
-    price: 470,
-    image: null,
-  },
-  {
-    id: 6,
-    name: "Alcohol",
-    category: "Prefabricated Metal",
-    price: 748,
-    image: null,
-  },
+  { id: 1, name: "Hydrochloride", category: "Framing (Wood)", price: 582, image: hydroImg },
+  { id: 2, name: "Occidentalis", category: "Fire Sprinkler System", price: 239, image: occiImg },
+  { id: 3, name: "Octinoxate", category: "Eifs", price: 306, image: octiImg },
+  { id: 4, name: "Prednisone", category: "Soft Flooring and Base", price: 579, image: predImg },
+  { id: 5, name: "Helminthos", category: "Overhead Doors", price: 470, image: helminImg },
+  { id: 6, name: "Alcohol", category: "Prefabricated Metal", price: 748, image: alcoholImg },
 ];
 
 function DrugStorePage() {
   const [activeTab, setActiveTab] = useState("drugstore");
   const [medicines, setMedicines] = useState(mockMedicines);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedMedicine, setSelectedMedicine] = useState(null);
 
-  const handleDelete = (id) => {
-    setMedicines(medicines.filter((m) => m.id !== id));
+  const handleAdd = (newMedicine) => {
+    setMedicines([...medicines, { ...newMedicine, id: Date.now() }]);
   };
 
   const handleEdit = (id) => {
-    console.log("Edit medicine:", id);
+    const medicine = medicines.find((m) => m.id === id);
+    setSelectedMedicine(medicine);
+    setShowEditModal(true);
+  };
+
+  const handleSave = (updatedMedicine) => {
+    setMedicines(medicines.map((m) =>
+      m.id === updatedMedicine.id ? updatedMedicine : m
+    ));
+  };
+
+  const handleDeleteClick = (id) => {
+    const medicine = medicines.find((m) => m.id === id);
+    setSelectedMedicine(medicine);
+    setShowDeleteModal(true);
+  };
+
+  const handleConfirmDelete = () => {
+    setMedicines(medicines.filter((m) => m.id !== selectedMedicine.id));
+    setShowDeleteModal(false);
+    setSelectedMedicine(null);
   };
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
+
         {/* SHOP HEADER */}
         <div className={styles.shopHeader}>
           <h1 className={styles.shopName}>Huel LLC</h1>
           <div className={styles.shopInfo}>
             <span className={styles.infoItem}>
-              <svg width="16" height="16">
-                <use href="#icon-map" />
-              </svg>
+              <svg width="16" height="16"><use href="#icon-map" /></svg>
               Owner: <strong>Datha Harmon</strong>
             </span>
             <span className={styles.infoItem}>
-              <svg width="16" height="16">
-                <use href="#icon-map" />
-              </svg>
+              <svg width="16" height="16"><use href="#icon-map" /></svg>
               Kretoria F45
             </span>
             <span className={styles.infoItem}>
-              <svg width="16" height="16">
-                <use href="#icon-phone" />
-              </svg>
+              <svg width="16" height="16"><use href="#icon-phone" /></svg>
               595-08-2102
             </span>
             <button className={styles.editDataBtn}>Edit data</button>
-            <button className={styles.addMedicineBtn}>Add medicine</button>
+            <button
+              className={styles.addMedicineBtn}
+              onClick={() => setShowAddModal(true)}
+            >
+              Add medicine
+            </button>
           </div>
         </div>
 
@@ -103,7 +105,6 @@ function DrugStorePage() {
         <div className={styles.grid}>
           {medicines.map((medicine) => (
             <div key={medicine.id} className={styles.card}>
-              {/* IMAGE */}
               <div className={styles.imageBox}>
                 {medicine.image ? (
                   <img
@@ -115,18 +116,12 @@ function DrugStorePage() {
                   <div className={styles.imagePlaceholder}>💊</div>
                 )}
               </div>
-
-              {/* INFO */}
               <div className={styles.cardInfo}>
                 <div className={styles.cardTop}>
                   <span className={styles.medicineName}>{medicine.name}</span>
-                  <span className={styles.medicinePrice}>
-                    ₴{medicine.price}
-                  </span>
+                  <span className={styles.medicinePrice}>₴{medicine.price}</span>
                 </div>
                 <p className={styles.medicineCategory}>{medicine.category}</p>
-
-                {/* BUTTONS */}
                 <div className={styles.cardButtons}>
                   <button
                     className={styles.editBtn}
@@ -136,7 +131,7 @@ function DrugStorePage() {
                   </button>
                   <button
                     className={styles.deleteBtn}
-                    onClick={() => handleDelete(medicine.id)}
+                    onClick={() => handleDeleteClick(medicine.id)}
                   >
                     Delete
                   </button>
@@ -145,6 +140,28 @@ function DrugStorePage() {
             </div>
           ))}
         </div>
+
+        {showAddModal && (
+          <AddMedicineModal
+            onClose={() => setShowAddModal(false)}
+            onAdd={handleAdd}
+          />
+        )}
+        {showEditModal && (
+          <EditMedicineModal
+            onClose={() => setShowEditModal(false)}
+            onSave={handleSave}
+            medicine={selectedMedicine}
+          />
+        )}
+        {showDeleteModal && (
+          <DeleteMedicineModal
+            onClose={() => setShowDeleteModal(false)}
+            onConfirm={handleConfirmDelete}
+            medicine={selectedMedicine}
+          />
+        )}
+
       </div>
     </div>
   );

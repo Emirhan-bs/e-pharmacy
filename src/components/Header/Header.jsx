@@ -1,8 +1,22 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/main-logo.png";
 import styles from "./Header.module.css";
+import { logout } from "../../api/auth";
 
 function Header() {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -41,7 +55,9 @@ function Header() {
         </nav>
 
         {/* LOGOUT BUTTON */}
-        <button className={styles.logout}>Log out</button>
+        <button className={styles.logout} onClick={handleLogout}>
+          Log out
+        </button>
       </div>
     </header>
   );
