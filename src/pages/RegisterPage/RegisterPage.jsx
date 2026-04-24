@@ -5,6 +5,7 @@ import { useNavigate, NavLink } from "react-router-dom";
 import styles from "./RegisterPage.module.css";
 import logo from "../../assets/images/main-logo.png";
 import pillImg from "../../assets/images/white-pill.png";
+import { register as registerUser } from "../../api/auth";
 
 const schema = yup.object({
   name: yup.string().min(2, "Min 2 characters").required("Name is required"),
@@ -32,7 +33,7 @@ function RegisterPage() {
 
   const onSubmit = async (data) => {
     try {
-      await register(data);
+      await registerUser(data);
       navigate("/login");
     } catch (error) {
       console.error("Register failed:", error);
