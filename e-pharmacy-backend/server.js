@@ -1,8 +1,14 @@
+// eslint-disable-next-line no-undef
 const express = require("express");
+// eslint-disable-next-line no-undef
 const cors = require("cors");
+// eslint-disable-next-line no-undef
 const jwt = require("jsonwebtoken");
+// eslint-disable-next-line no-undef
 const bcrypt = require("bcryptjs");
+// eslint-disable-next-line no-undef
 const fs = require("fs");
+// eslint-disable-next-line no-undef
 const path = require("path");
 
 const app = express();
@@ -13,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 // ── File-based storage helpers ──────────────────────────────────────────────
+// eslint-disable-next-line no-undef
 const dbPath = (name) => path.join(__dirname, "data", `_${name}.json`);
 
 const loadDB = (name) => {
@@ -28,6 +35,7 @@ const saveDB = (name, data) => {
 };
 
 const readData = (filename) => {
+  // eslint-disable-next-line no-undef
   const filePath = path.join(__dirname, "data", filename);
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
 };
