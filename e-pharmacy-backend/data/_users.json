@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1777208193598,
+    "name": "Vendor",
+    "email": "vendor@gmail.com",
+    "phone": "55646546321",
+    "password": "$2b$10$dyJtY4DEgDfpmgUxqbiOHePJuFj7bWCwoH2Ybvr4tozGLGvH4/4pm"
+  },
+  {
+    "id": 1777208261474,
+    "name": "Ret",
+    "email": "ret@gmail.com",
+    "phone": "32131231",
+    "password": "$2b$10$y4r8cU90wXdP6N4n8NGDiOYgb9JlekGoy7NodPReq378kg8pDIQtS"
+  }
+]

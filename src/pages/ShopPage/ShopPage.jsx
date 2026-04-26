@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import styles from "./ShopPage.module.css";
 import shopImage from "../../assets/images/shop-image.png";
+import { createShop } from "../../api/auth";
 
 const schema = yup.object({
   shopName: yup.string().required("Shop name is required"),
@@ -13,7 +14,7 @@ const schema = yup.object({
   address: yup.string().required("Address is required"),
   city: yup.string().required("City is required"),
   zip: yup.string().required("Zip code is required"),
-  delivery: yup.string().required("Please select an opion"),
+  delivery: yup.string().required("Please select an option"),
 });
 
 function ShopPage() {
@@ -28,17 +29,30 @@ function ShopPage() {
     defaultValues: { delivery: "yes" },
   });
 
-  const onSubmit = async (data) => {
-    console.log("Shop data:", data);
+const onSubmit = async (data) => {
+  try {
+    await createShop({
+      name: data.shopName,
+      ownerName: data.ownerName,
+      email: data.email,
+      phone: data.phone,
+      address: data.address,
+      city: data.city,
+      zip: data.zip,
+      delivery: data.delivery,
+    });
     navigate("/medicine");
-  };
+  } catch (error) {
+    alert(error.response?.data?.message || "Failed to create shop.");
+  }
+};
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        {/* Form COntainer */}
+        {/* Form Container */}
         <div className={styles.card}>
-          <h1 className={styles.title}>Create your Shop </h1>
+          <h1 className={styles.title}>Create your Shop</h1>
           <p className={styles.subtitle}>
             This information will be displayed publicly so be careful what you
             share.
@@ -78,17 +92,17 @@ function ShopPage() {
                 <label className={styles.label}>Email address</label>
                 <input
                   type="email"
-                  {...register}
+                  {...register("email")}
                   placeholder="Enter text"
                   className={` ${styles.input} ${errors.email ? styles.inputError : ""} `}
                 />
                 {errors.email && (
-                  <p className={styles.error}> {errors.email.message}</p>
+                  <p className={styles.error}>{errors.email.message}</p>
                 )}
               </div>
             </div>
-            {/* ROw 2 - Phone, Address, City */}
 
+            {/* ROW 2 - Phone, Address, City */}
             <div className={styles.row}>
               <div className={styles.field}>
                 <label className={styles.label}>Phone Number</label>
@@ -111,7 +125,7 @@ function ShopPage() {
                   className={` ${styles.input} ${errors.address ? styles.inputError : ""} `}
                 />
                 {errors.address && (
-                  <p className={styles.error}> {errors.address.message}</p>
+                  <p className={styles.error}>{errors.address.message}</p>
                 )}
               </div>
               <div className={styles.field}>
@@ -123,13 +137,12 @@ function ShopPage() {
                   className={` ${styles.input} ${errors.city ? styles.inputError : ""} `}
                 />
                 {errors.city && (
-                  <p className={styles.error}> {errors.city.message}</p>
+                  <p className={styles.error}>{errors.city.message}</p>
                 )}
               </div>
             </div>
 
             {/* ROW 3 - Zip only */}
-
             <div className={styles.rowSingle}>
               <div className={styles.field}>
                 <label className={styles.label}>Zip / Postal</label>
@@ -140,7 +153,7 @@ function ShopPage() {
                   className={` ${styles.input} ${errors.zip ? styles.inputError : ""} `}
                 />
                 {errors.zip && (
-                  <p className={styles.error}> {errors.zip.message} </p>
+                  <p className={styles.error}>{errors.zip.message}</p>
                 )}
               </div>
             </div>
@@ -169,11 +182,13 @@ function ShopPage() {
                 </label>
               </div>
             </div>
+
             <button type="submit" className={styles.button}>
               Create account
             </button>
           </form>
         </div>
+
         {/* Right - Shop Image */}
         <div className={styles.imageWrapper}>
           <img src={shopImage} alt="pharmacy" className={styles.image} />
@@ -182,4 +197,5 @@ function ShopPage() {
     </div>
   );
 }
+
 export default ShopPage;

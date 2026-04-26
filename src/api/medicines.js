@@ -1,10 +1,18 @@
 import axiosInstance from './axiosInstance';
 
-//Get all medicines
+//Get MY shop's medicines
 export const getMedicines = async (params) => {
     const response = await axiosInstance.get("/api/products", {params});
     return response.data; 
 };
+
+//Get all medicines in the platform (for "All medicine" tab)
+export const getAllMedicines = async (params) => {
+    const response = await axiosInstance.get("/api/products/all", {params});
+    return response.data
+};
+
+
 
 //Get single medicine
 export const getMedicineById = async (id) => {

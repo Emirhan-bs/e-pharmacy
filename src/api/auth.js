@@ -24,3 +24,18 @@ export const getUserInfo = async () => {
   const response = await axiosInstance.get("/api/user/current");
   return response.data;
 };
+
+export const createShop = async (shopData) => {
+  const response = await axiosInstance.post("/api/pharmacies", shopData);
+  return response.data;
+};
+
+export const getShop = async () => {
+  const response = await axiosInstance.get("/api/pharmacies/my");
+  return response.data;
+};
+
+export const updateShop = async (shopData) => {
+  const response = await axiosInstance.put("/api/pharmacies/my", shopData);
+  return response.data;
+};

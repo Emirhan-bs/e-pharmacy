@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://backend-admin-ht2s.onrender.com",
+  baseURL: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },
@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
       window.location.href = "/login";
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;
