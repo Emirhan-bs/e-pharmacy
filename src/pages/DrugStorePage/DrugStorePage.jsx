@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./DrugStorePage.module.css";
 import AddMedicineModal from "../../components/modals/AddMedicineModal";
 import EditMedicineModal from "../../components/modals/EditMedicineModal";
@@ -22,6 +23,7 @@ function DrugStorePage() {
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const [shop, setShop] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const navigate = useNavigate();
   const [showEditShopModal, setShowEditShopModal] = useState(false);
 
   useEffect(() => {
@@ -185,7 +187,7 @@ function DrugStorePage() {
         {activeTab === "allmedicine" && (
           <div className={styles.grid}>
             {allMedicines.map((medicine) => (
-              <div key={medicine.id || medicine._id} className={styles.card}>
+              <div key={`${medicine.id}-${medicine.name}`} className={styles.card}>
                 <div className={styles.imageBox}>
                   {medicine.photo ? (
                     <img src={medicine.photo} alt={medicine.name} className={styles.medicineImg} />
@@ -196,14 +198,16 @@ function DrugStorePage() {
                 <div className={styles.cardInfo}>
                   <div className={styles.cardTop}>
                     <span className={styles.medicineName}>{medicine.name}</span>
-                    <span className={styles.medicinePrice}>₴{medicine.price}</span>
-                  </div>
+                      </div>
                   <p className={styles.medicineCategory}>{medicine.category}</p>
                   <div className={styles.cardButtons}>
                     <button className={styles.editBtn} onClick={() => handleAddToShop(medicine)}>
                       Add to shop
                     </button>
-                    <button className={styles.deleteBtn}>Details</button>
+                    <button  className={styles.detailsLink} onClick={()=>{
+                      sessionStorage.setItem("detailMedicine", JSON.stringify(medicine));
+                      navigate(`/medicine/${medicine.id}`);
+                    }}>Details</button>
                   </div>
                 </div>
               </div>

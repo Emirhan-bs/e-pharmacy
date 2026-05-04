@@ -214,6 +214,22 @@
   color: #ef4444;
 }
 
+/* Details Button */
+.detailsLink {
+  background: none;
+  border: none;
+  color: var(--color-gray);
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.detailsLink:hover {
+  color: var(--color-primary);
+}
+
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .grid {

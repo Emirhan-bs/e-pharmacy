@@ -86,7 +86,6 @@ function StatisticsPage() {
                       <td className={styles.td}>{customer.name}</td>
                       <td className={styles.td}>{customer.email}</td>
                       <td className={styles.td}>{customer.spent}</td>
-                      <td className={styles.td}>—</td>
                       <td className={styles.td}>
                         <button
                           className={styles.viewBtn}
