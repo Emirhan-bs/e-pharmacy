@@ -13,7 +13,7 @@ const schema = yup.object({
 });
 
 function EditMedicineModal({ onClose, onSave, medicine }) {
-  const [previewImg, setPreviewImg] = useState(medicine?.image || null);
+  const [previewImg, setPreviewImg] = useState(medicine?.photo || null);
 
   const {
     register,

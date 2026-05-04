@@ -6,8 +6,20 @@
   --color-dark: #1d1e21;
   --color-gray: #6b7280;
   --color-border: #e5e7eb;
-  --color-upload:#F7F7F7;
-  --color-customers:#E7F1ED;
+  --color-upload: #f7f7f7;
+  --color-customers: #e7f1ed;
+  --color-error: #e85050;
+  --color-error-light: rgba(232, 80, 80, 0.1);
+  --color-light-green: #e7f1ed;
+  --color-gray-light: #dcdddf;
+  --color-bg-light: #f9f9f9;
+
+  /* Status colors */
+  --color-completed: #59b17a;
+  --color-confirmed: #7b61ff;
+  --color-pending: #f9a246;
+  --color-cancelled: #e85050;
+  --color-processing: #7db9ff;
 
   --font-main: "Inter", sans-serif;
 

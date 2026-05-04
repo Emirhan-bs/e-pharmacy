@@ -12,7 +12,7 @@ function DeleteMedicineModal({ onClose, onConfirm, medicine }) {
         {/* MEDICINE PREVIEW */}
         <div className={styles.medicinePreview}>
           <img
-            src={medicine?.image}
+            src={medicine?.photo}
             alt={medicine?.name}
             className={styles.medicineImg}
           />

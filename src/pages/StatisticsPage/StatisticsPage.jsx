@@ -174,7 +174,22 @@ function StatisticsPage() {
                 {selectedCustomer.spent}
               </span>
             </div>
-            <p className={styles.noData}>No purchase data available</p>
+            <div className={styles.productsList}>
+              {(selectedCustomer.purchases || []).map((product, i) => (
+                <div key={i} className={styles.productItem}>
+                  <img
+                    src={product.photo}
+                    alt={product.name}
+                    className={styles.productThumb}
+                  />
+                  <div className={styles.productDetails}>
+                    <p className={styles.productName}>{product.name}</p>
+                    <p className={styles.productDesc}>{product.description}</p>
+                    <p className={styles.productPrice}>₴ {product.price}</p>
+                  </div>
+                </div>
+              ))}
+            </div>{" "}
           </div>
         </div>
       )}

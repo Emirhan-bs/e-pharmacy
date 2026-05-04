@@ -28,13 +28,16 @@ function AddMedicineModal({ onClose, onAdd }) {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPreviewImg(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onloadend = () =>{
+        setPreviewImg(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const onSubmit = (data) => {
-    console.log("New medicine:", data);
-    onAdd({ ...data, image: previewImg });
+    onAdd({ ...data, photo: previewImg });
     onClose();
   };
 

@@ -39,7 +39,10 @@ export const deleteMedicine = async (id) => {
     return response.data
 };
 
-
+export const getReviews = async () => {
+  const response = await axiosInstance.get("/api/reviews");
+  return response.data;
+};
 
 
 

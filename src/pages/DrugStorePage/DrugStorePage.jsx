@@ -25,14 +25,17 @@ function DrugStorePage() {
   const [showEditModal, setShowEditModal] = useState(false);
   const navigate = useNavigate();
   const [showEditShopModal, setShowEditShopModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      const [medicinesResult, shopResult, allMedicinesResult] = await Promise.allSettled([
-        getMedicines(),
-        getShop(),
-        getAllMedicines(),
-      ]);
+      const [medicinesResult, shopResult, allMedicinesResult] =
+        await Promise.allSettled([
+          getMedicines(),
+          getShop(),
+          getAllMedicines(),
+        ]);
       if (medicinesResult.status === "fulfilled") {
         setMedicines(medicinesResult.value.products || []);
       }
@@ -65,7 +68,9 @@ function DrugStorePage() {
   const handleSave = async (updatedMedicine) => {
     try {
       const saved = await editMedicine(updatedMedicine._id, updatedMedicine);
-      setMedicines(medicines.map((m) => (m._id === updatedMedicine._id ? saved : m)));
+      setMedicines(
+        medicines.map((m) => (m._id === updatedMedicine._id ? saved : m)),
+      );
     } catch (error) {
       console.error("Failed to edit medicine:", error);
     }
@@ -104,35 +109,59 @@ function DrugStorePage() {
     }
   };
 
+  const filteredMedicines = allMedicines.filter((m) => {
+    const matchSearch = m.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchCategory = selectedCategory
+      ? m.category === selectedCategory
+      : true;
+    return matchSearch && matchCategory;
+  });
+
   if (loading) return <p style={{ padding: "40px" }}>Loading...</p>;
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         {/* SHOP HEADER */}
-        <div className={styles.shopHeader}>
-          <h1 className={styles.shopName}>{shop?.name || "Your Store"}</h1>
-          <div className={styles.shopInfo}>
-            <span className={styles.infoItem}>
-              <svg width="16" height="16"><use href="#icon-map" /></svg>
-              Owner: <strong>{shop?.ownerName || "—"}</strong>
-            </span>
-            <span className={styles.infoItem}>
-              <svg width="16" height="16"><use href="#icon-map" /></svg>
-              {shop?.address || "—"}
-            </span>
-            <span className={styles.infoItem}>
-              <svg width="16" height="16"><use href="#icon-phone" /></svg>
-              {shop?.phone || "—"}
-            </span>
-            <button className={styles.editDataBtn} onClick={() => setShowEditShopModal(true)}>
-              Edit data
-            </button>
-            <button className={styles.addMedicineBtn} onClick={() => setShowAddModal(true)}>
-              Add medicine
-            </button>
+        {shop && (
+          <div className={styles.shopHeader}>
+            <h1 className={styles.shopName}>{shop?.name || "Your Store"}</h1>
+            <div className={styles.shopInfo}>
+              <span className={styles.infoItem}>
+                <svg width="16" height="16">
+                  <use href="#icon-map" />
+                </svg>
+                Owner: <strong>{shop?.ownerName || "—"}</strong>
+              </span>
+              <span className={styles.infoItem}>
+                <svg width="16" height="16">
+                  <use href="#icon-map" />
+                </svg>
+                {shop?.address || "—"}
+              </span>
+              <span className={styles.infoItem}>
+                <svg width="16" height="16">
+                  <use href="#icon-phone" />
+                </svg>
+                {shop?.phone || "—"}
+              </span>
+              <button
+                className={styles.editDataBtn}
+                onClick={() => setShowEditShopModal(true)}
+              >
+                Edit data
+              </button>
+              <button
+                className={styles.addMedicineBtn}
+                onClick={() => setShowAddModal(true)}
+              >
+                Add medicine
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* TABS */}
         <div className={styles.tabs}>
@@ -162,7 +191,11 @@ function DrugStorePage() {
               <div key={medicine._id} className={styles.card}>
                 <div className={styles.imageBox}>
                   {medicine.photo ? (
-                    <img src={medicine.photo} alt={medicine.name} className={styles.medicineImg} />
+                    <img
+                      src={medicine.photo}
+                      alt={medicine.name}
+                      className={styles.medicineImg}
+                    />
                   ) : (
                     <div className={styles.imagePlaceholder}>💊</div>
                   )}
@@ -170,12 +203,24 @@ function DrugStorePage() {
                 <div className={styles.cardInfo}>
                   <div className={styles.cardTop}>
                     <span className={styles.medicineName}>{medicine.name}</span>
-                    <span className={styles.medicinePrice}>₴{medicine.price}</span>
+                    <span className={styles.medicinePrice}>
+                      ₴{medicine.price}
+                    </span>
                   </div>
                   <p className={styles.medicineCategory}>{medicine.category}</p>
                   <div className={styles.cardButtons}>
-                    <button className={styles.editBtn} onClick={() => handleEdit(medicine._id)}>Edit</button>
-                    <button className={styles.deleteBtn} onClick={() => handleDeleteClick(medicine._id)}>Delete</button>
+                    <button
+                      className={styles.editBtn}
+                      onClick={() => handleEdit(medicine._id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className={styles.deleteBtn}
+                      onClick={() => handleDeleteClick(medicine._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
@@ -185,51 +230,131 @@ function DrugStorePage() {
 
         {/* ALL MEDICINE TAB */}
         {activeTab === "allmedicine" && (
-          <div className={styles.grid}>
-            {allMedicines.map((medicine) => (
-              <div key={`${medicine.id}-${medicine.name}`} className={styles.card}>
-                <div className={styles.imageBox}>
-                  {medicine.photo ? (
-                    <img src={medicine.photo} alt={medicine.name} className={styles.medicineImg} />
-                  ) : (
-                    <div className={styles.imagePlaceholder}>💊</div>
-                  )}
-                </div>
-                <div className={styles.cardInfo}>
-                  <div className={styles.cardTop}>
-                    <span className={styles.medicineName}>{medicine.name}</span>
-                      </div>
-                  <p className={styles.medicineCategory}>{medicine.category}</p>
-                  <div className={styles.cardButtons}>
-                    <button className={styles.editBtn} onClick={() => handleAddToShop(medicine)}>
-                      Add to shop
-                    </button>
-                    <button  className={styles.detailsLink} onClick={()=>{
-                      sessionStorage.setItem("detailMedicine", JSON.stringify(medicine));
-                      navigate(`/medicine/${medicine.id}`);
-                    }}>Details</button>
+          <>
+            <div className={styles.filterBar}>
+              <select
+                className={styles.categorySelect}
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="">Product category</option>
+                <option value="Medicine">Medicine</option>
+                <option value="Heart">Heart</option>
+                <option value="Head">Head</option>
+                <option value="Hand">Hand</option>
+                <option value="Leg">Leg</option>
+                <option value="Dental Care">Dental Care</option>
+                <option value="Skin Care">Skin Care</option>
+              </select>
+              <input
+                className={styles.searchInput}
+                type="text"
+                placeholder="Search medicine"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button className={styles.filterBtn}>
+                <svg width="14" height="12">
+                  <use href="#icon-filter" />
+                </svg>
+                Filter
+              </button>{" "}
+            </div>
+            <div className={styles.grid}>
+              {filteredMedicines.map((medicine, index) => (
+                <div
+                  key={`${medicine.id}-${medicine.name}-${index}`}
+                  className={styles.card}
+                >
+                  <div className={styles.imageBox}>
+                    {medicine.photo ? (
+                      <img
+                        src={medicine.photo}
+                        alt={medicine.name}
+                        className={styles.medicineImg}
+                      />
+                    ) : (
+                      <div className={styles.imagePlaceholder}>💊</div>
+                    )}
+                  </div>
+                  <div className={styles.cardInfo}>
+                    <div className={styles.cardTop}>
+                      <span className={styles.medicineName}>
+                        {medicine.name}
+                      </span>
+                      <span className={styles.medicinePrice}>
+                        ₴{medicine.price}
+                      </span>
+                    </div>
+                    <p className={styles.medicineCategory}>
+                      {medicine.category}
+                    </p>
+                    <div className={styles.cardButtons}>
+                      <button
+                        className={styles.editBtn}
+                        onClick={() => handleAddToShop(medicine)}
+                      >
+                        Add to shop
+                      </button>
+                      <button
+                        className={styles.detailsLink}
+                        onClick={() => {
+                          sessionStorage.setItem(
+                            "detailMedicine",
+                            JSON.stringify(medicine),
+                          );
+                          navigate(`/medicine/${medicine.id}`);
+                        }}
+                      >
+                        Details
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </>
         )}
 
         {showAddModal && (
-          <AddMedicineModal onClose={() => setShowAddModal(false)} onAdd={handleAdd} />
+          <AddMedicineModal
+            onClose={() => setShowAddModal(false)}
+            onAdd={handleAdd}
+          />
         )}
         {showEditModal && (
-          <EditMedicineModal onClose={() => setShowEditModal(false)} onSave={handleSave} medicine={selectedMedicine} />
+          <EditMedicineModal
+            onClose={() => setShowEditModal(false)}
+            onSave={handleSave}
+            medicine={selectedMedicine}
+          />
         )}
         {showDeleteModal && (
-          <DeleteMedicineModal onClose={() => setShowDeleteModal(false)} onConfirm={handleConfirmDelete} medicine={selectedMedicine} />
+          <DeleteMedicineModal
+            onClose={() => setShowDeleteModal(false)}
+            onConfirm={handleConfirmDelete}
+            medicine={selectedMedicine}
+          />
         )}
 
         {showEditShopModal && (
-          <div className={styles.overlay} onClick={() => setShowEditShopModal(false)}>
-            <div className={styles.editShopModal} onClick={(e) => e.stopPropagation()}>
-              <button className={styles.closeBtn} onClick={() => setShowEditShopModal(false)}>✕</button>
-              <p style={{ padding: "20px", color: "gray" }}>Edit shop form coming soon.</p>
+          <div
+            className={styles.overlay}
+            onClick={() => setShowEditShopModal(false)}
+          >
+            <div
+              className={styles.editShopModal}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className={styles.closeBtn}
+                onClick={() => setShowEditShopModal(false)}
+              >
+                ✕
+              </button>
+              <p style={{ padding: "20px", color: "gray" }}>
+                Edit shop form coming soon.
+              </p>
             </div>
           </div>
         )}

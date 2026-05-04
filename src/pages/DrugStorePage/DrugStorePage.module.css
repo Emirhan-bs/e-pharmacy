@@ -229,7 +229,60 @@
 .detailsLink:hover {
   color: var(--color-primary);
 }
+.filterBar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+}
 
+.categorySelect {
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-primary);
+  background: white;
+  font-size: 14px;
+  color: var(--color-dark);
+      min-width: 224px;
+  cursor: pointer;
+  outline: none;
+  
+}
+
+.searchInput {
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: white;
+  font-size: 14px;
+  color: var(--color-dark);
+  flex: 1;
+  outline: none;
+  max-width: 224px;
+}
+
+.searchInput:focus {
+  border-color: var(--color-primary);
+}
+
+.filterBtn {
+  padding: 10px 24px;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--color-primary);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.filterBtn:hover {
+  opacity: 0.9;
+}
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .grid {

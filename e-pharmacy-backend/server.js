@@ -72,7 +72,9 @@ app.post("/api/user/login", async (req, res) => {
   if (!user) return res.status(400).json({ message: "Invalid credentials" });
   const match = await bcrypt.compare(password, user.password);
   if (!match) return res.status(400).json({ message: "Invalid credentials" });
-  const token = jwt.sign({ id: user.id, email: user.email }, SECRET, { expiresIn: "7d" });
+  const token = jwt.sign({ id: user.id, email: user.email }, SECRET, {
+    expiresIn: "7d",
+  });
   res.json({ token });
 });
 
@@ -114,7 +116,7 @@ app.put("/api/pharmacies/my", authMiddleware, (req, res) => {
   res.json(pharmacies[index]);
 });
 
-// ── Product routes ───────────────────────────────────────────────────────────
+// ── Vendor Product routes ───────────────────────────────────────────────────
 app.get("/api/products/all", authMiddleware, (req, res) => {
   const products = readData("products.json");
   res.json({ products });
@@ -128,7 +130,11 @@ app.get("/api/products", authMiddleware, (req, res) => {
 
 app.post("/api/products", authMiddleware, (req, res) => {
   const storeProducts = loadDB("store_products");
-  const product = { _id: Date.now().toString(), userId: req.user.id, ...req.body };
+  const product = {
+    _id: Date.now().toString(),
+    userId: req.user.id,
+    ...req.body,
+  };
   storeProducts.push(product);
   saveDB("store_products", storeProducts);
   res.status(201).json(product);
@@ -136,7 +142,9 @@ app.post("/api/products", authMiddleware, (req, res) => {
 
 app.put("/api/products/:id", authMiddleware, (req, res) => {
   const storeProducts = loadDB("store_products");
-  const index = storeProducts.findIndex((p) => p._id === req.params.id && p.userId === req.user.id);
+  const index = storeProducts.findIndex(
+    (p) => p._id === req.params.id && p.userId === req.user.id,
+  );
   if (index === -1) return res.status(404).json({ message: "Not found" });
   storeProducts[index] = { ...storeProducts[index], ...req.body };
   saveDB("store_products", storeProducts);
@@ -146,25 +154,143 @@ app.put("/api/products/:id", authMiddleware, (req, res) => {
 app.delete("/api/products/:id", authMiddleware, (req, res) => {
   let storeProducts = loadDB("store_products");
   storeProducts = storeProducts.filter(
-    (p) => !(p._id === req.params.id && p.userId === req.user.id)
+    (p) => !(p._id === req.params.id && p.userId === req.user.id),
   );
   saveDB("store_products", storeProducts);
   res.json({ message: "Deleted" });
 });
 
-// ── Dashboard route ──────────────────────────────────────────────────────────
+// ── Vendor Dashboard route ───────────────────────────────────────────────────
 app.get("/api/dashboard", authMiddleware, (req, res) => {
   const customers = readData("customers.json");
   const dashboard = readData("Income-Expenses.json");
   const products = readData("products.json");
   const suppliers = readData("suppliers.json");
+
+  const customersWithPurchases = customers.slice(0, 5).map((c, index) => {
+    const start = (index * 3) % products.length;
+    const purchases = [0, 1, 2].map((i) => {
+      const p = products[(start + i) % products.length];
+      return {
+        name: p.name,
+        description: `${p.category} medicine`,
+        price: p.price,
+        photo: p.photo,
+      };
+    });
+    return { ...c, purchases };
+  });
+
   res.json({
     productsCount: products.length,
     suppliersCount: suppliers.length,
     customersCount: customers.length,
-    customers: customers.slice(0, 5),
+    customers: customersWithPurchases,
     dashboard,
   });
+});
+
+app.get("/api/reviews", authMiddleware, (req, res) => {
+  const reviews = readData("reviews.json");
+  res.json({ reviews });
+});
+
+// ── Admin Auth ───────────────────────────────────────────────────────────────
+app.post("/api/admin/login", async (req, res) => {
+  const { email, password } = req.body;
+  let admins = loadDB("admins");
+  
+
+  if (admins.length === 0) {
+    const hashed = await bcrypt.hash("admin123", 10);
+    admins.push({
+      id: 1,
+      name: "Admin",
+      email: "admin@gmail.com",
+      password: hashed,
+      role: "admin",
+    });
+    saveDB("admins", admins);
+  }
+
+  const admin = admins.find((a) => a.email === email);
+  if (!admin) return res.status(400).json({ message: "Invalid credentials" });
+  const match = await bcrypt.compare(password, admin.password);
+  if (!match) return res.status(400).json({ message: "Invalid credentials" });
+  const token = jwt.sign(
+    { id: admin.id, email: admin.email, role: "admin" },
+    SECRET,
+    { expiresIn: "7d" },
+  );
+  res.json({ token });
+});
+
+app.get("/api/admin/current", authMiddleware, (req, res) => {
+  if (req.user.role !== "admin")
+    return res.status(403).json({ message: "Forbidden" });
+  res.json({ name: "Admin", email: req.user.email });
+});
+
+// ── Admin Data Routes ────────────────────────────────────────────────────────
+app.get("/api/orders", authMiddleware, (req, res) => {
+  const orders = readData("orders.json");
+  res.json({ orders });
+});
+
+app.get("/api/customers", authMiddleware, (req, res) => {
+  const customers = readData("customers.json");
+  res.json({ customers });
+});
+
+app.get("/api/admin/suppliers", authMiddleware, (req, res) => {
+  const suppliers = readData("suppliers.json");
+  res.json({ suppliers });
+});
+
+app.post("/api/admin/suppliers", authMiddleware, (req, res) => {
+  const suppliers = loadDB("suppliers_admin");
+  const supplier = { id: Date.now(), ...req.body };
+  suppliers.push(supplier);
+  saveDB("suppliers_admin", suppliers);
+  res.status(201).json(supplier);
+});
+
+app.put("/api/admin/suppliers/:id", authMiddleware, (req, res) => {
+  const suppliers = loadDB("suppliers_admin");
+  const index = suppliers.findIndex((s) => s.id === parseInt(req.params.id));
+  if (index === -1) return res.status(404).json({ message: "Not found" });
+  suppliers[index] = { ...suppliers[index], ...req.body };
+  saveDB("suppliers_admin", suppliers);
+  res.json(suppliers[index]);
+});
+
+app.get("/api/admin/products", authMiddleware, (req, res) => {
+  const products = readData("products.json");
+  res.json({ products });
+});
+
+app.post("/api/admin/products", authMiddleware, (req, res) => {
+  const products = loadDB("admin_products");
+  const product = { id: Date.now(), ...req.body };
+  products.push(product);
+  saveDB("admin_products", products);
+  res.status(201).json(product);
+});
+
+app.put("/api/admin/products/:id", authMiddleware, (req, res) => {
+  const products = loadDB("admin_products");
+  const index = products.findIndex((p) => p.id === parseInt(req.params.id));
+  if (index === -1) return res.status(404).json({ message: "Not found" });
+  products[index] = { ...products[index], ...req.body };
+  saveDB("admin_products", products);
+  res.json(products[index]);
+});
+
+app.delete("/api/admin/products/:id", authMiddleware, (req, res) => {
+  let products = loadDB("admin_products");
+  products = products.filter((p) => p.id !== parseInt(req.params.id));
+  saveDB("admin_products", products);
+  res.json({ message: "Deleted" });
 });
 
 app.listen(PORT, () => {

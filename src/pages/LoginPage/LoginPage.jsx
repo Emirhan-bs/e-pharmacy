@@ -30,9 +30,27 @@ function LoginPage() {
   });
 
   const onSubmit = async (data) => {
+    //Admin Login
     try {
+      const adminRes = await fetch("http://localhost:3001/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: data.email, password: data.password }),
+      });
+
+      if (adminRes.ok) {
+        const adminData = await adminRes.json();
+        localStorage.setItem("adminToken", adminData.token);
+        navigate("/admin/dashboard");
+        return;
+      }
+      // Check if it was an admin email that just failed
+      if (data.email === "admin@gmail.com") {
+        alert("Invalid admin credentials!");
+        return;
+      }
+      //Otherwise try vendor login
       const response = await login(data);
-      // Save token to localStorage
       localStorage.setItem("token", response.token);
       navigate("/shop");
     } catch (error) {
