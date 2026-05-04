@@ -32,11 +32,14 @@ function LoginPage() {
   const onSubmit = async (data) => {
     //Admin Login
     try {
-      const adminRes = await fetch("http://localhost:3001/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: data.email, password: data.password }),
-      });
+      const adminRes = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/admin/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: data.email, password: data.password }),
+        },
+      );
 
       if (adminRes.ok) {
         const adminData = await adminRes.json();
