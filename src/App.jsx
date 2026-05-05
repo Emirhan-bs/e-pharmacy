@@ -7,9 +7,12 @@ import DrugStorePage from "./pages/DrugStorePage/DrugStorePage";
 import StatisticsPage from "./pages/StatisticsPage/StatisticsPage";
 import PrivateRoute from "./components/PrivateRoute";
 import MedicineDetailPage from "./pages/MedicineDetailPage/MedicineDetailPage";
+import AdminLayout from "./components/AdminLayout/AdminLayout";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
-
-
+import AdminOrders from "./pages/AdminOrders/AdminOrders";
+import AdminProducts from "./pages/AdminProducts/AdminProducts";
+import AdminSuppliers from "./pages/AdminSuppliers/AdminSuppliers";
+import AdminCustomers from "./pages/AdminCustomers/AdminCustomers";
 
 function App() {
   return (
@@ -20,9 +23,15 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
 
         {/* Admin Routes */}
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="suppliers" element={<AdminSuppliers />} />
+          <Route path="customers" element={<AdminCustomers />} />
+        </Route>
 
-        {/* PRIVATE routes — all inside PrivateRoute */}
+        {/* PRIVATE vendor routes */}
         <Route
           path="/"
           element={
