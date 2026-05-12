@@ -133,13 +133,21 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 ## 🔑 Test Credentials
 
 ### Admin
+```
 Email:    admin@gmail.com
 Password: admin123
+```
 
 ### Vendor
+```
+Register your own account at /register
+```
+
 ---
 
 ## 📁 Project Structure
+
+```
 e-pharmacy/
 ├── src/
 │   ├── api/              # Axios API calls
@@ -165,14 +173,16 @@ e-pharmacy/
 │   ├── App.jsx
 │   └── main.jsx
 └── e-pharmacy-backend/
-├── server.js
-├── middleware/
-└── data/
-├── products.json
-├── suppliers.json
-├── customers.json
-├── orders.json
-└── Income-Expenses.json
+    ├── server.js
+    ├── middleware/
+    └── data/
+        ├── products.json
+        ├── suppliers.json
+        ├── customers.json
+        ├── orders.json
+        └── Income-Expenses.json
+```
+
 ---
 
 ## 📡 API Endpoints
