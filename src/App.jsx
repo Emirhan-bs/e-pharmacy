@@ -14,6 +14,12 @@ import AdminProducts from "./pages/AdminProducts/AdminProducts";
 import AdminSuppliers from "./pages/AdminSuppliers/AdminSuppliers";
 import AdminCustomers from "./pages/AdminCustomers/AdminCustomers";
 
+function AdminPrivateRoute({ children }) {
+  const token = localStorage.getItem("adminToken");
+  if (!token) return <Navigate to="/login" replace />;
+  return children;
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -23,7 +29,14 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
 
         {/* Admin Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route
+          path="/admin"
+          element={
+            <AdminPrivateRoute>
+              <AdminLayout />
+            </AdminPrivateRoute>
+          }
+        >
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="products" element={<AdminProducts />} />

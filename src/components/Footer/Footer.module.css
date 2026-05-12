@@ -117,3 +117,18 @@ opacity: 0.8;
     color: var(--color-white);
 }
 
+/** Developer part */
+.developer {
+  font-size: 13px;
+  color: var(--color-white);
+}
+
+.developerLink {
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.developerLink:hover {
+  text-decoration: underline;
+}

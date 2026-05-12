@@ -47,7 +47,6 @@ function LoginPage() {
         navigate("/admin/dashboard");
         return;
       }
-      // Check if it was an admin email that just failed
       if (data.email === "admin@gmail.com") {
         alert("Invalid admin credentials!");
         return;

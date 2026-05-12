@@ -76,4 +76,6 @@
   margin-left: 64px;
   flex: 1;
   min-height: 100vh;
+  overflow-x: hidden;
+  max-width: calc(100vw - 64px);
 }

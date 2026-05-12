@@ -1,14 +1,7 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import styles from "./AdminLayout.module.css";
 
 function AdminLayout() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem("adminToken");
-    navigate("/login");
-  };
-
   return (
     <div className={styles.layout}>
       {/* Side Bar */}
@@ -41,7 +34,7 @@ function AdminLayout() {
             }
           >
             <svg width="20" height="20">
-             <use href="#icon-products" />
+              <use href="#icon-products" />
             </svg>
           </NavLink>
           <NavLink
@@ -55,7 +48,7 @@ function AdminLayout() {
             </svg>
           </NavLink>
           <NavLink
-            to="/admin/icon-users"
+            to="/admin/customers"
             className={({ isActive }) =>
               isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
             }
@@ -65,11 +58,6 @@ function AdminLayout() {
             </svg>
           </NavLink>
         </nav>
-        <button className={styles.logout} onClick={handleLogout}>
-          <svg width="16" height="16">
-            <use href="#icon-logout" />
-          </svg>
-        </button>
       </aside>
 
       {/* Main Content */}

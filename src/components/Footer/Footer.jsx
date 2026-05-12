@@ -43,7 +43,7 @@ function Footer() {
                   className={styles.socialLink}
                 >
                   <svg width="32" height="32">
-                    <use href="#icon-facebook"/>
+                    <use href="#icon-facebook" />
                   </svg>
                 </a>
               </li>
@@ -55,7 +55,7 @@ function Footer() {
                   className={styles.socialLink}
                 >
                   <svg width="32" height="32">
-                    <use href="#icon-instagram"/>
+                    <use href="#icon-instagram" />
                   </svg>
                 </a>
               </li>
@@ -67,7 +67,7 @@ function Footer() {
                   className={styles.socialLink}
                 >
                   <svg width="32" height="32">
-                    <use href="#icon-youtube"/>
+                    <use href="#icon-youtube" />
                   </svg>
                 </a>
               </li>
@@ -80,6 +80,18 @@ function Footer() {
           <p className={styles.copyright}>
             &copy; 2026 E-Pharmacy. All rights reserved.
           </p>
+          <p className={styles.developer}>
+            Developed by{" "}
+            <a
+              href="https://www.linkedin.com/in/emirhan-buyuksenirli/"
+              target="_blank"
+              rel="noreferrer"
+              className={styles.developerLink}
+            >
+              Emirhan Buyuksenirli
+            </a>
+          </p>
+
           <div className={styles.bottomLinks}>
             <a href="#" className={styles.bottomLinks}>
               Privacy Policy

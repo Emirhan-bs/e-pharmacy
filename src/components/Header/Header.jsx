@@ -1,20 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/main-logo.png";
 import styles from "./Header.module.css";
-import { logout } from "../../api/auth";
 
 function Header() {
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Logout error:", error);
-    } finally {
-      localStorage.removeItem("token");
-      navigate("/login");
-    }
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("adminToken");
+    navigate("/login");
   };
 
   return (

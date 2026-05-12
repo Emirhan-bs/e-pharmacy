@@ -76,13 +76,17 @@
   border: none;
   cursor: pointer;
 }
-
+.avatarBtn:hover {
+  background: var(--color-error-light);
+  color: var(--color-error);
+}
 /** Stats */
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   padding: 24px;
+  box-sizing: border-box;
 }
 
 .statCard {
@@ -119,6 +123,17 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   padding: 0 24px 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.active {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.deactive {
+  background: var(--color-error-light);
+  color: var(--color-error);
 }
 
 .card {
@@ -206,6 +221,7 @@
 .error {
   background: var(--color-gray-light);
   color: var(--color-dark);
+  border: 1px solid var(--color-border);
 }
 
 .transName {
@@ -234,4 +250,9 @@
   height: 100vh;
   font-size: 16px;
   color: var(--color-gray);
+}
+
+.strikethrough{
+  text-decoration: line-through;
+  color: var(--color-dark);
 }
